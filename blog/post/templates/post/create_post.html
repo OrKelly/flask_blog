@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="empty_block"></div>
+<div class="login_form new_post">
+    <form action="" class="form_sign_in" enctype="multipart/form-data" method="post">
+
+        {{ form.hidden_tag() }}
+
+        <legend class="legend">{{ legend }}</legend>
+
+        <div class="invalid-feedback">
+            {% for errors in form.title.errors %}
+            <span>{{ errors }}</span>
+            {% endfor %}
+        </div>
+
+        {{ form.title(class='form-post-title', placeholder='Заголовок') }}
+
+        {{ form.content(class='form-post-textarea', placeholder='Текст статьи') }}
+        {{ form.tag_form(style='width:750px; color: blue; font-size: 18px;', placeholder='Задайте теги через /') }}<br>
+        Выберите рубрику поста {{ form.category(style='width:200px; color: blue; font-size: 18px;') }}
+        {{ form.picture }}
+
+        {{ form.submit(class='btn_new_post') }}
+
+
+    </form>
+</div>
+{% endblock content %}

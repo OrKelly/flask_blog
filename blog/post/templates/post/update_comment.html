@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<form action="" method="POST" enctype="multipart/form-data">
+
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-6 font_update">Обновление комментария</legend>
+                <div class="form-group">
+                    {{ form.body.label(class='form-control-label') }}
+
+                    {% if form.body.errors %}
+                    {{ form.body(class='form-control form-control-lg is-invalid') }}
+                    <div class="invalid-feedback">
+                        {% for errors in form.body.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.body(class='form-control form-control-lg') }}
+                    {% endif %}
+                </div>
+
+
+            </fieldset>
+    <br>
+
+            <div class="form-group">
+                {{ form.submit(class='btn btn-outline-info') }}
+            </div>
+
+        </form>
+
+{% endblock %}

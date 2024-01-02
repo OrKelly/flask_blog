@@ -1,0 +1,123 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+
+<div class="content-section">
+
+    <div class="left-side">
+
+        <h5>Зарегистрированные пользователи:</h5>
+        <ul>
+            {% for user in users %}
+                {% if current_user.id == 2 %}
+            <li>
+                <div class="card_user">
+                <img src="{{ url_for('static', filename='profile_pics/'+ user.username +'/account_image/'+ user.image_file) }}" alt="avatar_user"
+                class="mr-3 mt-3 rounded-circle" style="width: 40px">
+                </div>
+                <a href="{{ url_for('users.user_posts', username=user.username) }}">{{ user.username }}</a>
+                <h6 style="color: red;"><a href="{{ url_for('users.user_delete', username=user.username) }}">Удалить</a></h6>
+            </li>
+                {% else %}
+                <li><a href="{{ url_for('users.user_posts', username=user.username) }}">{{ user.username }}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+
+    </div>
+
+    <div class="list_post" style="font-size: 18px;">
+    <h5>Список статей:</h5>
+
+        <ol>
+
+            {% for post in user.posts %}
+
+                <li><a href="{{ url_for('posts.post', slug=post.slug) }}">{{ post.title }}</a></li>
+
+            {% endfor %}
+
+        </ol>
+
+    </div>
+    <div class="right-side">
+        <div class="card">
+            <img class="card-body account-img " src="{{ image_file }}">
+            <div class="media-body">
+                {% if current_user.is_admin %}
+                <h4 class="account-heading" style="color: red">{{ current_user.username }}</h4>
+                {% else %}
+                <h4 class="account-heading" style="color: green">{{ current_user.username }}</h4>
+                {% endif %}
+                <p class="text-secondary">{{ current_user.email }}</p>
+            </div>
+        </div>
+            <div class="update-info">
+
+                <form action="" method="post" enctype="multipart/form-data">
+
+                    {{ form.hidden_tag() }}
+
+                    <fieldset class="group-form">
+                        <legend class="border-bottom mb-6 font_update">Обновление аккаунта</legend>
+                        <div class="form-group">
+                        {{ form.username.label(class='form-control-label') }}
+
+                        {% if form.username.errors %}
+                        {{ form.username(class='form-control form-control-lg is-invalid') }}
+                        <div class="invalid-feedback">
+                            {% for errors in form.username.errors %}
+                            <span>{{ errors }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.username(class='form-control form-control-lg') }}
+                        {% endif %}
+                        </div>
+
+                    <div class="form-group">
+                        {{ form.email.label(class='form-control-label') }}
+
+                        {% if form.email.errors %}
+                        {{ form.email(class='form-control form-control-lg is-invalid') }}
+                        <div class="invalid-feedback">
+                            {% for errors in form.email.errors %}
+                            <span>{{ errors }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.email(class='form-control form-control-lg') }}
+                        {% endif %}
+                        </div>
+                    <div class="form-group">
+                        {{ form.picture.label(class='form-control-label') }}
+
+                        {% if form.picture.errors %}
+                        {{ form.picture(class='form-control form-control-lg is-invalid') }}
+                        <div class="invalid-feedback">
+                            {% for errors in form.picture.errors %}
+                            <span class="text-danger">{{ errors }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.picture(class='gс') }}
+                        {% endif %}
+                        </div>
+
+
+
+                    </fieldset>
+                        <div class="form-group">
+                            {{ form.submit(class='btn btn-outline-info') }}
+                        </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+

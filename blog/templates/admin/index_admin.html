@@ -1,0 +1,38 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+
+<img style="width:100px;" src="{{ image_file }}" alt="foto">
+<h3>Добро пожаловать, <span style="color: green;"> {{ current_user.username.split(' ')[0] }}</span></h3>
+
+
+<table class="table">
+<thead class="thead-dark">
+    <td>id</td>
+    <td>Лог</td>
+    <td>Дата</td>
+</thead>
+    {% for log in logs %}
+<tr>
+    <td>{{ log.id }}</td>
+    <td>{{ log.type }}</td>
+    <td>{{ log.date }}</td>
+</tr>
+{% endfor %}
+</table>
+     <div class="post_paginate">
+
+            {% for page_num in logs.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=3) %}
+            {% if page_num %}
+            {% if logs.page == page_num %}
+            <a class="btn btn-info mb-4" href="{{ url_for('admin.index', page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+            <a class="btn btn-outline-success mb-4" href="{{ url_for('admin.index', page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+            {% else %}
+            ...
+            {% endif %}
+            {% endfor %}
+        </div>
+
+{% endblock body %}

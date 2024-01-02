@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="wrapper_top">
+    <div class="left_side_top">
+        <h3>Команда проекта:</h3>
+        {% for admin in admins %}
+            <div class="top_user_left">
+                <img src="{{ url_for('static', filename='profile_pics/' + admin.username + '/' + 'account_image' + '/' + admin.image_file) }}"
+                             alt="" class="mr-3 mt-3 rounded-circle" style="width:40px;">
+                <a class="mr-2" href="{{ url_for('users.user_posts', username=admin.username)}}">{{
+                            admin.username }}</a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="middle_side_top">
+        <h3>Самые популярные посты:</h3>
+        {% for post in posts %}
+        <div class="middle_post_side">
+            <a class="mr-2" href="{{ url_for('posts.post', slug=post.slug)}}">{{ post.title }} - {{ post.views }} просмотров</a>
+        </div>
+        {% endfor %}
+
+    </div>
+    <div class="right_side_top">
+        <h3>Самые активные авторы:</h3>
+         {% for user in all_users %}
+                {% if user.posts|count > 0 %}
+                <p><a class="mr-2" href="{{ url_for('users.user_posts', username=user.username) }}">{{ user.username }}</a> - {{ user.posts|count }} поста</p>
+                {% endif%}
+            {% endfor %}
+    </div>
+</div>
+{% endblock %}
